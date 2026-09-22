@@ -54,7 +54,15 @@ export async function investigationRoutes(app: FastifyInstance): Promise<void> {
         investigationId = ins.rows[0].id;
       }
       await audit(req.user!.id, 'investigation.run', id, { confidence: result.confidence }, req.ip);
-      return reply.code(201).send({ id: investigationId, ...result });
+      // normalize to the persisted (snake_case) shape so POST and GET match
+      return reply.code(201).send({
+        id: investigationId,
+        status: 'complete',
+        confidence: result.confidence,
+        chain: result.chain,
+        tool_trace: result.toolTrace,
+        recommendation: result.recommendation,
+      });
     });
 
     sub.get('/investigations/:id', async (req, reply) => {

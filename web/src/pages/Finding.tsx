@@ -111,7 +111,7 @@ export default function FindingPage() {
               CAUSAL CHAIN · confidence {inv.confidence}
             </div>
             <div className="chain">
-              {inv.chain.nodes.map((n, i) => (
+              {(inv.chain?.nodes ?? []).map((n, i) => (
                 <React.Fragment key={n.id}>
                   {i > 0 && <div className="chain-link" />}
                   <div className="chain-node">
@@ -169,7 +169,7 @@ export default function FindingPage() {
             </div>
             <div className="drawer">
               <div className="mono small faint" style={{ marginBottom: 8, letterSpacing: '0.08em' }}>TOOL TRACE</div>
-              {inv.tool_trace.map((t, i) => (
+              {(inv.tool_trace ?? []).map((t, i) => (
                 <div key={i} className="small mono" style={{ marginBottom: 4 }}>
                   <span style={{ color: t.ok ? 'var(--green)' : 'var(--red)' }}>{t.ok ? '✓' : '✗'}</span>{' '}
                   {t.tool} <span className="faint">({t.ms}ms)</span>
